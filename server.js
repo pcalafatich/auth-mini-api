@@ -5,6 +5,7 @@ const cors = require('cors');
 const jwt = require('express-jwt');
 const jwtDecode = require('jwt-decode');
 const mongoose = require('mongoose');
+import pkg from "../package.json";
 
 const dashboardData = require('./data/dashboard');
 const User = require('./data/User');
@@ -17,6 +18,27 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Settings
+app.set("pkg", pkg);
+//app.set("port", process.env.PORT || 4000);
+//app.set("json spaces", 4);
+
+
+// Welcome Routes
+app.get("/", (req, res) => {
+  res.json({
+    message: "Constelaciones Mini API",
+    name: app.get("pkg").name,
+    version: app.get("pkg").version,
+    description: app.get("pkg").description,
+    author: app.get("pkg").author,
+  });
+});
+
+
+
+
 
 app.post('/api/authenticate', async (req, res) => {
   try {
@@ -64,6 +86,7 @@ app.post('/api/authenticate', async (req, res) => {
       .json({ message: 'ERROR.' });
   }
 });
+
 
 app.post('/api/signup', async (req, res) => {
   try {
