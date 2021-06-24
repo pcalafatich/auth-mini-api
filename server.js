@@ -1,5 +1,4 @@
 require('dotenv').config();
-//import pkg from './package.json';
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -22,8 +21,8 @@ app.use(bodyParser.json());
 
 // Settings
 //app.set("pkg", pkg);
-//app.set("port", process.env.PORT || 4000);
-//app.set("json spaces", 4);
+app.set("port", process.env.PORT || 4000);
+app.set("json spaces", 4);
 
 
 // Welcome Routes
@@ -36,9 +35,6 @@ app.get("/", (req, res) => {
     // author: app.get("pkg").author,
   });
 });
-
-
-
 
 
 app.post('/api/authenticate', async (req, res) => {
