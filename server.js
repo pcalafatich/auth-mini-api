@@ -1,11 +1,12 @@
 require('dotenv').config();
+//import pkg from './package.json';
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const jwt = require('express-jwt');
 const jwtDecode = require('jwt-decode');
 const mongoose = require('mongoose');
-import pkg from "../package.json";
+
 
 const dashboardData = require('./data/dashboard');
 const User = require('./data/User');
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Settings
-app.set("pkg", pkg);
+//app.set("pkg", pkg);
 //app.set("port", process.env.PORT || 4000);
 //app.set("json spaces", 4);
 
@@ -29,10 +30,10 @@ app.set("pkg", pkg);
 app.get("/", (req, res) => {
   res.json({
     message: "Constelaciones Mini API",
-    name: app.get("pkg").name,
-    version: app.get("pkg").version,
-    description: app.get("pkg").description,
-    author: app.get("pkg").author,
+    // name: app.get("pkg").name,
+    // version: app.get("pkg").version,
+    // description: app.get("pkg").description,
+    // author: app.get("pkg").author,
   });
 });
 
@@ -62,7 +63,6 @@ app.post('/api/authenticate', async (req, res) => {
     if (passwordValid) {
       const { password, bio, ...rest } = user;
       const userInfo = Object.assign({}, { ...rest });
-
       const token = createToken(userInfo);
 
       const decodedToken = jwtDecode(token);
