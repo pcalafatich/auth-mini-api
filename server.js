@@ -14,6 +14,7 @@ const InventoryItem = require('./data/InventoryItem');
 const { createToken, hashPassword, verifyPassword } = require('./util');
 
 const app = express();
+const PORT = process.env.PORT || 5000
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,8 +22,8 @@ app.use(bodyParser.json());
 
 // Settings
 //app.set("pkg", pkg);
-app.set("port", process.env.PORT || 4000);
-app.set("json spaces", 4);
+//app.set("port", PORT);
+//app.set("json spaces", 4);
 
 
 // Welcome Routes
@@ -349,8 +350,8 @@ async function connect() {
   } catch (err) {
     console.log('Mongoose error', err);
   }
-  app.listen(3001);
-  console.log('API listening on localhost:3001');
+  app.listen(PORT);
+  console.logconsole.log(`Listening on ${ PORT }`);
 }
 
 connect();
