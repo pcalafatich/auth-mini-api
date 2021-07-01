@@ -17,8 +17,8 @@
     "express-jwt": "^5.3.3",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
-    "socket.io": "^2.4.1",
-    "mongoose": "^5.9.13"
+    "mongoose": "^5.9.13",
+    "socket.io": "^2.4.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

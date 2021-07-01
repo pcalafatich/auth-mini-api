@@ -13,13 +13,27 @@ const InventoryItem = require('./data/InventoryItem');
 
 const { createToken, hashPassword, verifyPassword } = require('./util');
 
+
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
+
+const servidor = require('./socketServer');
+
+io.on('connection', client => {
+    console.log("Socket.id: ", client.id);
+    servidor.iniciarSesion(io, client)
+})
+
 const PORT = process.env.PORT || 5000
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
+console.log("Server iniciado");
 // Settings
 //app.set("pkg", pkg);
 //app.set("port", PORT);
@@ -41,7 +55,6 @@ app.get("/", (req, res) => {
 app.post('/api/authenticate', async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await User.findOne({
       email
     }).lean();
@@ -88,7 +101,6 @@ app.post('/api/authenticate', async (req, res) => {
 app.post('/api/signup', async (req, res) => {
   try {
     const { email, firstName, lastName } = req.body;
-
     const hashedPassword = await hashPassword(
       req.body.password
     );
@@ -208,7 +220,7 @@ app.patch('/api/user-role', async (req, res) => {
     );
     res.json({
       message:
-        'User role updated. You must log in again for the changes to take effect.'
+        'Rol de Usuario actualizado. Debe loguarse nuevamente para que los cambios tengan efecto.'
     });
   } catch (err) {
     return res.status(400).json({ error: err });
@@ -245,12 +257,12 @@ app.post(
       const inventoryItem = new InventoryItem(input);
       await inventoryItem.save();
       res.status(201).json({
-        message: 'Inventory item created!',
+        message: 'Artículo creado!',
         inventoryItem
       });
     } catch (err) {
       return res.status(400).json({
-        message: 'There was a problem creating the item'
+        message: 'Hubo un error creando este ítem del inventario'
       });
     }
   }
@@ -266,12 +278,12 @@ app.delete(
         { _id: req.params.id, user: req.user.sub }
       );
       res.status(201).json({
-        message: 'Inventory item deleted!',
+        message: 'Objeto del inventario eliminado!',
         deletedItem
       });
     } catch (err) {
       return res.status(400).json({
-        message: 'There was a problem deleting the item.'
+        message: 'Hubo un problema eliminado este ítem.'
       });
     }
   }
@@ -288,7 +300,7 @@ app.get('/api/users', requireAuth, async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'There was a problem getting the users'
+      message: 'Hubo un problema intentando obtener los usuarios'
     });
   }
 });
@@ -307,7 +319,7 @@ app.get('/api/bio', requireAuth, async (req, res) => {
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'There was a problem updating your bio'
+      message: 'Hubo un error actualizando su bio'
     });
   }
 });
@@ -329,12 +341,12 @@ app.patch('/api/bio', requireAuth, async (req, res) => {
     );
 
     res.json({
-      message: 'Bio updated!',
+      message: 'Bio actualizada!',
       bio: updatedUser.bio
     });
   } catch (err) {
     return res.status(400).json({
-      message: 'There was a problem updating your bio'
+      message: 'Hubo un error actualizando su bio'
     });
   }
 });
@@ -350,8 +362,15 @@ async function connect() {
   } catch (err) {
     console.log('Mongoose error', err);
   }
-  app.listen(PORT);
-  console.logconsole.log(`Listening on ${ PORT }`);
-}
+  // error handling middleware should be loaded after the loading the routes
+  // if (app.get('env') === 'development') {
+  //   app.use(errorHandler())
+  // }
+  
+  server.listen(PORT, function () {
+    console.log('Express server listening on port ' + PORT)
+  })
+ }
 
 connect();
+
