@@ -11,6 +11,8 @@ let users = []
 //console.log("io: ", io)
 
 const iniciarSesion = (sio, socket) => {
+    console.log("Estamos adentro")
+
     /**
      * configuramos todos los listeners de sockets de eventos.
      */
