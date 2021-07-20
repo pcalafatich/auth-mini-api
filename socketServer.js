@@ -3,7 +3,7 @@
  */
 
 let io
-let sesionSocket
+//let sesionSocket
 // salasInSession guarda un array de todas las conexiones de sockets activas
 let salasInSession = []
 let users = []
@@ -19,27 +19,27 @@ const iniciarSesion = (sio, socket) => {
 
     // inicializamos variables globales.
     io = sio
-    sesionSocket = socket
+    socket = socket
 
     // agregamos el a un array que guarda todos los sockets activos.
     salasInSession.push(sesionSocket)
     //console.log("salasInSession: ", salasInSession);
 
     // Se ejecuta cuando el cliente se desconecta de su sesion de socket.
-    sesionSocket.on("disconnect", onDisconnect)
+    socket.on("disconnect", onDisconnect)
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
-    sesionSocket.on("new move", newMove)
+    socket.on("new move", newMove)
 
     // Usuario crea una nueva sala de reunion despues de hacer click al identificarse en el Frontend
-    sesionSocket.on("createNewSesion", createNewSesion)
+    socket.on("createNewSesion", createNewSesion)
 
     // Usuario se une a la sala de reunion despues de ser dirigido a la URL con '/game/:sesionId'
-    sesionSocket.on("userJoinSesion", userJoinsSesion)
+    socket.on("userJoinSesion", userJoinsSesion)
 
-    sesionSocket.on('request username', requestUserName)
+    socket.on('request username', requestUserName)
 
-    sesionSocket.on('recieved userName', recievedUserName)
+    socket.on('recieved userName', recievedUserName)
 
     // registra los event listeners para el video chat:
     videoChatBackend()
@@ -48,11 +48,11 @@ const iniciarSesion = (sio, socket) => {
 
 function videoChatBackend() {
     //
-    sesionSocket.on("callUser", (data) => {
+    socket.on("callUser", (data) => {
         io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
     })
 
-    sesionSocket.on("acceptCall", (data) => {
+    socket.on("acceptCall", (data) => {
         io.to(data.to).emit('callAccepted', data.signal);
     })
 }
