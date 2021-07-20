@@ -65,10 +65,10 @@ function userJoinsSesion(idData) {
         players: rooms[socket.roomId].players,
       });
 */
-    console.log("SERVER: Recibimos idData:", idData);
-    console.log("SERVER: idData.sesionId: ", idData.sesionId);
-    console.log("SERVER: idData.userName: ", idData.userName);
-    console.log("SERVER: idData.isAdmin: ", idData.isAdmin);
+    console.log("Desde el SERVER: idData:", idData);
+    console.log("Desde el SERVER: idData.sesionId: ", idData.sesionId);
+    console.log("Desde el SERVER: idData.userName: ", idData.userName);
+    console.log("Desde el SERVER: idData.isAdmin: ", idData.isAdmin);
 
     /**
      * Une el socket a la sesion con los datos de la sesion
