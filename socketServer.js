@@ -22,7 +22,7 @@ const iniciarSesion = (sio, socket) => {
     socket = socket
 
     // agregamos el a un array que guarda todos los sockets activos.
-    salasInSession.push(sesionSocket)
+    salasInSession.push(socket)
     //console.log("salasInSession: ", salasInSession);
 
     // Se ejecuta cuando el cliente se desconecta de su sesion de socket.
