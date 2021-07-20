@@ -3,7 +3,7 @@
  */
 
 let io
-//let sesionSocket
+let sesionSocket
 // salasInSession guarda un array de todas las conexiones de sockets activas
 let salasInSession = []
 let users = []
@@ -19,27 +19,27 @@ const iniciarSesion = (sio, socket) => {
 
     // inicializamos variables globales.
     io = sio
-    socket = socket
+    sesionSocket = socket
 
     // agregamos el a un array que guarda todos los sockets activos.
-    salasInSession.push(socket)
+    salasInSession.push(sesionSocket)
     //console.log("salasInSession: ", salasInSession);
 
     // Se ejecuta cuando el cliente se desconecta de su sesion de socket.
-    socket.on("disconnect", onDisconnect)
+    sesionSocket.on("disconnect", onDisconnect)
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
-    socket.on("new move", newMove)
+    sesionSocket.on("new move", newMove)
 
     // Usuario crea una nueva sala de reunion despues de hacer click al identificarse en el Frontend
-    socket.on("createNewSesion", createNewSesion)
+    sesionSocket.on("createNewSesion", createNewSesion)
 
     // Usuario se une a la sala de reunion despues de ser dirigido a la URL con '/game/:sesionId'
-    socket.on("userJoinSesion", userJoinsSesion)
+    sesionSocket.on("userJoinSesion", userJoinsSesion)
 
-    socket.on('request username', requestUserName)
+    sesionSocket.on('request username', requestUserName)
 
-    socket.on('recieved userName', recievedUserName)
+    sesionSocket.on('recieved userName', recievedUserName)
 
     // registra los event listeners para el video chat:
     videoChatBackend()
@@ -48,11 +48,11 @@ const iniciarSesion = (sio, socket) => {
 
 function videoChatBackend() {
     //
-    socket.on("callUser", (data) => {
+    sesionSocket.on("callUser", (data) => {
         io.to(data.userToCall).emit('hey', {signal: data.signalData, from: data.from});
     })
 
-    socket.on("acceptCall", (data) => {
+    sesionSocket.on("acceptCall", (data) => {
         io.to(data.to).emit('callAccepted', data.signal);
     })
 }
@@ -65,10 +65,10 @@ function userJoinsSesion(idData) {
         players: rooms[socket.roomId].players,
       });
 */
-    console.log("Desde el SERVER: idData:", idData);
-    console.log("Desde el SERVER: idData.sesionId: ", idData.sesionId);
-    console.log("Desde el SERVER: idData.userName: ", idData.userName);
-    console.log("Desde el SERVER: idData.isAdmin: ", idData.isAdmin);
+    console.log("Desde SERVER: Recibimos idData:", idData);
+    console.log("Desde SERVER: idData.sesionId: ", idData.sesionId);
+    console.log("Desde SERVER: idData.userName: ", idData.userName);
+    console.log("Desde SERVER: idData.isAdmin: ", idData.isAdmin);
 
     /**
      * Une el socket a la sesion con los datos de la sesion
