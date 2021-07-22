@@ -29,6 +29,10 @@ const iniciarSesion = (sio, socket) => {
     sesionSocket.on("disconnect", onDisconnect)
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
+    sesionSocket.on("agrega figura", addFigura)
+    
+
+    // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
     sesionSocket.on("new move", newMove)
 
     // Usuario crea una nueva sala de reunion despues de hacer click al identificarse en el Frontend
@@ -132,6 +136,18 @@ function newMove(move) {
     console.log("movimiento enviado desde el servidor:", move)
 
     io.to(sesionId).emit('movimiento_ajeno', move);
+}
+
+function addFigura(agrega) {
+    /**
+     * Obtenemos el ID de la sala a la que enviaremos el mensaje.
+     * Enviamos el mensaje a todos menos al que realizó el movimiento
+     */
+
+    const sesionId = agrega.sesionId
+    console.log(" AF movimiento enviado desde el servidor:", agrega)
+
+    io.to(sesionId).emit('agrega_figura_ajeno', agrega);
 }
 
 function onDisconnect() {
