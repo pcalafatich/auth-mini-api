@@ -48,9 +48,9 @@ const iniciarSesion = (sio, socket) => {
     /* ****************************************** CHAT ******************************************** */
     let nombre;
 
-    sesionsocket.on("conectado", chat_conectado);
+    sesionSocket.on("conectado", chat_conectado)
   
-    sesionsocket.on("mensaje", chat_mensaje);
+    sesionSocket.on("mensaje", chat_mensaje)
   
     // sesion socket.on("disconnect", () => {
     //   io.emit("mensajes", {
