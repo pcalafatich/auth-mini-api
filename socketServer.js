@@ -2,11 +2,11 @@
  * Servidor de event listeners y emitters.
  */
 
-let io
-let sesionSocket
+let io;
+let sesionSocket;
 // salasInSession guarda un array de todas las conexiones de sockets activas
-let salasInSession = []
-let users = []
+let salasInSession = [];
+let users = [];
 
 //console.log("io: ", io)
 
@@ -44,6 +44,28 @@ const iniciarSesion = (sio, socket) => {
     sesionSocket.on('request username', requestUserName)
 
     sesionSocket.on('recieved userName', recievedUserName)
+
+    /* ****************************************** CHAT ******************************************** */
+    let nombre;
+
+    sesionsocket.on("conectado", chat_conectado);
+  
+    sesionsocket.on("mensaje", chat_mensaje);
+  
+    // sesion socket.on("disconnect", () => {
+    //   io.emit("mensajes", {
+    //     servidor: "Servidor",
+    //     mensaje: `${nombre} ha abandonado la sala`,
+    //   });
+    // });
+
+
+
+    /************************************************************************************************ */
+
+
+
+
 
     // registra los event listeners para el video chat:
     videoChatBackend()
@@ -166,4 +188,21 @@ function recievedUserName(data) {
     io.to(data.sesionId).emit('get Other UserName', data);
 }
 
+/* *************************** FUNCIONES CHAT ************************************** */
+
+function chat_conectado(nomb) {
+    const nombre = nomb;
+    //socket.broadcast.emit manda el mensaje a todos los clientes excepto al que ha enviado el mensaje
+    this.broadcast.emit("mensajes", {
+      nombre: nombre,
+      mensaje: `${nombre} ha entrado en la sala del chat`,
+    });
+  }
+
+function chat_mensaje (nombre, mensaje) {
+    //io.emit manda el mensaje a todos los clientes conectados al chat
+    io.emit("mensajes", { nombre, mensaje });
+  }
+
+/* ********************************************************************************** */  
 exports.iniciarSesion = iniciarSesion
