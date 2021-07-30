@@ -30,6 +30,9 @@ const iniciarSesion = (sio, socket) => {
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
     sesionSocket.on("agrega figura", addFigura)
+
+    // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
+    sesionSocket.on("elimina figura", removeFigura)
     
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
@@ -170,6 +173,19 @@ function addFigura(agrega) {
     console.log(" AF movimiento enviado desde el servidor:", agrega)
 
     io.to(sesionId).emit('agrega_figura_ajeno', agrega);
+}
+
+
+function removeFigura(elimina) {
+    /**
+     * Obtenemos el ID de la sala a la que enviaremos el mensaje.
+     * Enviamos el mensaje a todos menos al que realizó el movimiento
+     */
+
+    const sesionId = elimina.sesionId
+    console.log(" AF movimiento enviado desde el servidor:", elimina)
+
+    io.to(sesionId).emit('elimina_figura_ajeno', elimina);
 }
 
 function onDisconnect() {
