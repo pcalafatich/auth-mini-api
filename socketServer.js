@@ -187,10 +187,11 @@ function removeFigura(elimina) {
     io.to(sesionId).emit('elimina_figura_ajeno', elimina);
 }
 
-function addFlecha(id, desdeId, hastaId) {
-    console.log("id flecha: ", id)
-    console.log("desdeId: ", desdeId)
-    console.log("hastaId: ", hastaId)
+function addFlecha(flecha) {
+   
+    console.log("id flecha: ", flecha.id)
+    console.log("desdeId: ", flecha.desdeId)
+    console.log("hastaId: ", flecha.hastaId)
 
 }
 
