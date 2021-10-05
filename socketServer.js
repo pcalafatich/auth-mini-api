@@ -33,6 +33,11 @@ const iniciarSesion = (sio, socket) => {
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
     sesionSocket.on("elimina figura", removeFigura)
+
+    // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
+    sesionSocket.on("agregar flecha", addFlecha)
+
+
     
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
@@ -66,12 +71,6 @@ const iniciarSesion = (sio, socket) => {
 
     /************************************************************************************************ */
 
-
-
-
-
-    // registra los event listeners para el video chat:
-    videoChatBackend()
 }
 
 
@@ -188,6 +187,15 @@ function removeFigura(elimina) {
     io.to(sesionId).emit('elimina_figura_ajeno', elimina);
 }
 
+function addFlecha(id, desdeId, hastaId) {
+    console.log("id flecha: ", id)
+    console.log("desdeId: ", desdeId)
+    console.log("hastaId: ", hastaId)
+
+}
+
+
+
 function onDisconnect() {
     let i = salasInSession.indexOf(sesionSocket);
     salasInSession.splice(i, 1);
@@ -211,7 +219,7 @@ function chat_conectado(nomb) {
     //socket.broadcast.emit manda el mensaje a todos los clientes excepto al que ha enviado el mensaje
     this.broadcast.emit("mensajes", {
       nombre: nombre,
-      mensaje: `${nombre} ha entrado en la sala del chat`,
+      mensaje: `${nombre} se ha unido a la sesion`,
     });
   }
 
