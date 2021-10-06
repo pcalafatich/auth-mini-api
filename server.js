@@ -15,14 +15,14 @@ const { createToken, hashPassword, verifyPassword } = require('./util');
 
 
 const app = express();
+app.use(cors());
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server, {
   cors: {
-    origin: '*',
+    origin: ['*'],
   }
 });
 
-app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
