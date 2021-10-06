@@ -16,7 +16,11 @@ const { createToken, hashPassword, verifyPassword } = require('./util');
 
 const app = express();
 const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
+const io = require('socket.io').listen(server, {
+  cors: {
+    origin: '*',
+  }
+});
 
 app.use(cors());
 app.use(bodyParser.json())
@@ -30,9 +34,6 @@ io.on('connection', client => {
 })
 
 const PORT = process.env.PORT || 5000
-
-
-
 
 console.log("Server iniciado");
 // Settings
