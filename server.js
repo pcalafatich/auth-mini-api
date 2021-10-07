@@ -19,7 +19,7 @@ app.use(cors());
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server, {
   cors: {
-    origin: ['*'],
+    origin: 'http://localhost:3000', 'https://claudiapedrosa.com'
   }
 });
 
