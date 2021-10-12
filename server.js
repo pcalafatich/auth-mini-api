@@ -15,27 +15,37 @@ const { createToken, hashPassword, verifyPassword } = require('./util');
 
 
 const app = express();
-app.use(cors());
-const server = require('http').createServer(app);
-/*const io = require('socket.io').listen(server, {
-  cors: {origin: 'http://localhost:3000'}
-});
-*/
-// ************
-const io = require("socket.io")(server, {
-  origins: ["http//localhost:3000"],
 
-  handlePreflightRequest: (req, res) => {
-    res.writeHead(200, {
-      "Access-Control-Allow-Origin": "http://localhost:3000",
-      "Access-Control-Allow-Methods": "GET,POST",
-      "Access-Control-Allow-Headers": "my-custom-header",
-      "Access-Control-Allow-Credentials": true
-    });
-    res.end();
-  }
+// Configurar cabeceras y cors
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+  next();
 });
-// **************************** 
+app.use(cors());
+
+
+
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
+
+// // ************
+// const io = require("socket.io")(server, {
+//   origins: ["http//localhost:3000"],
+
+//   handlePreflightRequest: (req, res) => {
+//     res.writeHead(200, {
+//       "Access-Control-Allow-Origin": "http://localhost:3000",
+//       "Access-Control-Allow-Methods": "GET,POST",
+//       "Access-Control-Allow-Headers": "my-custom-header",
+//       "Access-Control-Allow-Credentials": true
+//     });
+//     res.end();
+//   }
+// });
+// // **************************** 
 
 
 
