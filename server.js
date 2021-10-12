@@ -261,67 +261,67 @@ app.patch('/api/user-role', async (req, res) => {
   }
 });
 
-app.get(
-  '/api/inventory',
-  requireAuth,
-  requireAdmin,
-  async (req, res) => {
-    try {
-      const user = req.user.sub;
-      const inventoryItems = await InventoryItem.find({
-        user
-      });
-      res.json(inventoryItems);
-    } catch (err) {
-      return res.status(400).json({ error: err });
-    }
-  }
-);
+// app.get(
+//   '/api/inventory',
+//   requireAuth,
+//   requireAdmin,
+//   async (req, res) => {
+//     try {
+//       const user = req.user.sub;
+//       const inventoryItems = await InventoryItem.find({
+//         user
+//       });
+//       res.json(inventoryItems);
+//     } catch (err) {
+//       return res.status(400).json({ error: err });
+//     }
+//   }
+// );
 
-app.post(
-  '/api/inventory',
-  requireAuth,
-  requireAdmin,
-  async (req, res) => {
-    try {
-      const userId = req.user.sub;
-      const input = Object.assign({}, req.body, {
-        user: userId
-      });
-      const inventoryItem = new InventoryItem(input);
-      await inventoryItem.save();
-      res.status(201).json({
-        message: 'Artículo creado!',
-        inventoryItem
-      });
-    } catch (err) {
-      return res.status(400).json({
-        message: 'Hubo un error creando este ítem del inventario'
-      });
-    }
-  }
-);
+// app.post(
+//   '/api/inventory',
+//   requireAuth,
+//   requireAdmin,
+//   async (req, res) => {
+//     try {
+//       const userId = req.user.sub;
+//       const input = Object.assign({}, req.body, {
+//         user: userId
+//       });
+//       const inventoryItem = new InventoryItem(input);
+//       await inventoryItem.save();
+//       res.status(201).json({
+//         message: 'Artículo creado!',
+//         inventoryItem
+//       });
+//     } catch (err) {
+//       return res.status(400).json({
+//         message: 'Hubo un error creando este ítem del inventario'
+//       });
+//     }
+//   }
+// );
 
-app.delete(
-  '/api/inventory/:id',
-  requireAuth,
-  requireAdmin,
-  async (req, res) => {
-    try {
-      const deletedItem = await InventoryItem.findOneAndDelete(
-        { _id: req.params.id, user: req.user.sub }
-      );
-      res.status(201).json({
-        message: 'Objeto del inventario eliminado!',
-        deletedItem
-      });
-    } catch (err) {
-      return res.status(400).json({
-        message: 'Hubo un problema eliminado este ítem.'
-      });
-    }
-  }
-);
+// app.delete(
+//   '/api/inventory/:id',
+//   requireAuth,
+//   requireAdmin,
+//   async (req, res) => {
+//     try {
+//       const deletedItem = await InventoryItem.findOneAndDelete(
+//         { _id: req.params.id, user: req.user.sub }
+//       );
+//       res.status(201).json({
+//         message: 'Objeto del inventario eliminado!',
+//         deletedItem
+//       });
+//     } catch (err) {
+//       return res.status(400).json({
+//         message: 'Hubo un problema eliminado este ítem.'
+//       });
+//     }
+//   }
+// );
 
 app.get('/api/users', requireAuth, async (req, res) => {
   try {
@@ -407,4 +407,3 @@ async function connect() {
  }
 
 connect();
-

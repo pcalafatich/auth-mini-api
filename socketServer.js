@@ -194,7 +194,7 @@ function addFlecha(flecha) {
     console.log("hastaId: ", flecha.hastaId)
     console.log("sesionId: ",  flecha.sesionId)
 
-    io.to(sesionId).emit('agregar_flecha_ajena', flecha);
+   // io.to(sesionId).emit('agregar_flecha_ajena', flecha);
 }
 
 
