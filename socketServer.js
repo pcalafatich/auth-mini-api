@@ -194,9 +194,12 @@ function addFlecha(flecha) {
     console.log("hastaId: ", flecha.hastaId)
     console.log("sesionId: ",  flecha.sesionId)
 
+    const idFlecha = flecha.idFlecha
+    const desdeId = flecha.desdeId
+    const hastaId = flecha.hastaId
     const sesionId = flecha.sesionId
 
-   io.to(sesionId).emit('agregar_flecha_ajena', flecha);
+   io.to(sesionId).emit('agregar_flecha_ajena', {idFlecha, desdeId, hastaId});
 }
 
 
