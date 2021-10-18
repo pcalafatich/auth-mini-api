@@ -200,8 +200,9 @@ function addFlecha(flecha) {
     const desdeId = flecha.desdeId
     const hastaId = flecha.hastaId
     const sesionId = flecha.sesionId
+    const isMyMove = false
 
-   io.to(sesionId).emit('agregar_flecha_ajena', {idFlecha, desdeId, hastaId});
+   io.to(sesionId).emit('agregar_flecha_ajena', {idFlecha, desdeId, hastaId, isMyMove});
 }
 
 function removeFlechas({sesionId}) {
