@@ -189,10 +189,12 @@ function removeFigura(elimina) {
 
 function addFlecha(flecha) {
    
-    console.log("id flecha: ", flecha.id)
+    console.log("id flecha: ", flecha.idFlecha)
     console.log("desdeId: ", flecha.desdeId)
     console.log("hastaId: ", flecha.hastaId)
     console.log("sesionId: ",  flecha.sesionId)
+
+    const sesionId = flecha.sesionId
 
    // io.to(sesionId).emit('agregar_flecha_ajena', flecha);
 }
