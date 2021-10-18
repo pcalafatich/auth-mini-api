@@ -37,6 +37,8 @@ const iniciarSesion = (sio, socket) => {
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
     sesionSocket.on("agregar flecha", addFlecha)
 
+    // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
+    sesionSocket.on("eliminar flechas", removeFlechas)
 
     
 
@@ -201,6 +203,12 @@ function addFlecha(flecha) {
 
    io.to(sesionId).emit('agregar_flecha_ajena', {idFlecha, desdeId, hastaId});
 }
+
+function removeFlechas({sesionId}) {
+   
+   io.to(sesionId).emit('remover_flechas_ajena', false);
+}
+
 
 
 
