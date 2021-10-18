@@ -196,7 +196,7 @@ function addFlecha(flecha) {
 
     const sesionId = flecha.sesionId
 
-   // io.to(sesionId).emit('agregar_flecha_ajena', flecha);
+   io.to(sesionId).emit('agregar_flecha_ajena', flecha);
 }
 
 
