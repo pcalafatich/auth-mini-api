@@ -141,7 +141,7 @@ function userJoinsSesion(idData) {
 
 
 function createNewSesion(sesionId) {
-    console.log("(SERVER-CreateNewSesion-sesionId)", sesionId);
+    //console.log("(SERVER-CreateNewSesion-sesionId)", sesionId);
 
     // Devuelve la identificacion de la Sesion (sesionId) y el
     // socket ID (mySocketId) del Administrador
@@ -159,7 +159,7 @@ function newMove(move) {
      */
 
     const sesionId = move.sesionId
-    console.log("movimiento enviado desde el servidor:", move)
+    //console.log("movimiento enviado desde el servidor:", move)
 
     io.to(sesionId).emit('movimiento_ajeno', move);
 }
@@ -171,7 +171,7 @@ function addFigura(agrega) {
      */
 
     const sesionId = agrega.sesionId
-    console.log(" AF movimiento enviado desde el servidor:", agrega)
+    //console.log(" AF movimiento enviado desde el servidor:", agrega)
 
     io.to(sesionId).emit('agrega_figura_ajeno', agrega);
 }
@@ -184,18 +184,13 @@ function removeFigura(elimina) {
      */
 
     const sesionId = elimina.sesionId
-    console.log(" AF movimiento enviado desde el servidor:", elimina)
+    //console.log(" AF movimiento enviado desde el servidor:", elimina)
 
     io.to(sesionId).emit('elimina_figura_ajeno', elimina);
 }
 
 function addFlecha(flecha) {
    
-    console.log("id flecha: ", flecha.idFlecha)
-    console.log("desdeId: ", flecha.desdeId)
-    console.log("hastaId: ", flecha.hastaId)
-    console.log("sesionId: ",  flecha.sesionId)
-
     const idFlecha = flecha.idFlecha
     const desdeId = flecha.desdeId
     const hastaId = flecha.hastaId
@@ -207,7 +202,7 @@ function addFlecha(flecha) {
 
 function removeFlechas({sesionId}) {
    
-   io.to(sesionId).emit('remover_flechas_ajena', false);
+   io.to(sesionId).emit('remover_flechas_ajena');
 }
 
 
