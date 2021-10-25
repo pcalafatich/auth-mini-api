@@ -48,35 +48,23 @@ const server = require('http').createServer(app);
 //   origins: ["http//localhost:3000"]
 // });
 
-const io = require('socket.io')(server, {
-  origins: ['https://claudiapedrosa.com'],
+// const io = require('socket.io')(server, {
+//   origins: ['https://claudiapedrosa.com']
+// });
+
+
+
+const io = require("socket.io")(server, {
   handlePreflightRequest: (req, res) => {
-    res.writeHead(200, {
-      "Access-Control-Allow-Origin": "https://claudiapedrosa.com",
-      "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE"
-    });
-    res.end();
+      const headers = {
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+          "Access-Control-Allow-Origin": req.headers.Origin, //or the specific Origin you want to give access to,
+          "Access-Control-Allow-Credentials": true
+      };
+      res.writeHead(200, headers);
+      res.end();
   }
 });
-
-
-
-// // ************
-// const io = require("socket.io")(server, {
-//   origins: ["http//localhost:3000"],
-
-//   handlePreflightRequest: (req, res) => {
-//     res.writeHead(200, {
-//       "Access-Control-Allow-Origin": "http://localhost:3000",
-//       "Access-Control-Allow-Methods": "GET,POST",
-//       "Access-Control-Allow-Headers": "my-custom-header",
-//       "Access-Control-Allow-Credentials": true
-//     });
-//     res.end();
-//   }
-// });
-// // **************************** 
-
 
 
 app.use(bodyParser.json())
