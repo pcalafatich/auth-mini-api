@@ -49,8 +49,17 @@ const server = require('http').createServer(app);
 // });
 
 const io = require('socket.io')(server, {
-  origins: ['https://claudiapedrosa.com']
-} )
+  origins: ['https://claudiapedrosa.com'],
+  handlePreflightRequest: (req, res) => {
+    res.writeHead(200, {
+      "Access-Control-Allow-Origin": "https://claudiapedrosa.com",
+      "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE"
+    });
+    res.end();
+  }
+});
+
+
 
 // // ************
 // const io = require("socket.io")(server, {
