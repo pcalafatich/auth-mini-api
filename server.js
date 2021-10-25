@@ -35,7 +35,7 @@ const server = require('http').createServer(app);
 //   origins: ["http//localhost:3000"]
 // });
 
-const io = require('socket.io')(server, { origins: ['http://claudiapedrosa.com', 'http://localhost:3000']})
+const io = require('socket.io')(server, { origins: ['http://claudiapedrosa.com', 'https://localhost:3000', 'http://claudiapedrosa.com']})
 
 // // ************
 // const io = require("socket.io")(server, {
