@@ -40,6 +40,10 @@ const iniciarSesion = (sio, socket) => {
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
     sesionSocket.on("eliminar flechas", removeFlechas)
 
+    // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
+    sesionSocket.on('elimina ultima flecha', removeLastFlecha)
+
+    
     
 
     // Envía un 'new move' a las otras sesiones de socket que estan conectadas en la misma sala.
@@ -206,7 +210,9 @@ function removeFlechas({sesionId}) {
 }
 
 
-
+function removeLastFlecha({sesionId}) {
+    io.to(sesionId).emit('remover_ultima_flecha_ajena');
+}
 
 function onDisconnect() {
     let i = salasInSession.indexOf(sesionSocket);
